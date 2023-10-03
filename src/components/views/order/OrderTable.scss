@@ -28,9 +28,9 @@
         }
         &__search {
             border: none;
-            
-            border-bottom: 1px solid #ccc; 
-            border-radius: 0; 
+
+            border-bottom: 1px solid #ccc;
+            border-radius: 0;
             .ant-input-prefix {
                 margin-right: 10px;
             }
@@ -41,14 +41,15 @@
             padding: 0 20px;
             border-radius: 0 0 15px 15px;
         }
-        .ant-table-thead{
+        .ant-table-thead {
+            border-radius: 12px;
             .ant-table-cell {
-                color: #94A3B8;
+                color: #94a3b8;
                 text-align: center;
             }
         }
-        .ant-table-tbody{
-            .ant-table-cell{
+        .ant-table-tbody {
+            .ant-table-cell {
                 text-align: center;
             }
         }
@@ -59,11 +60,11 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    background:rgba(233, 239, 253, 1);
+    background: rgba(233, 239, 253, 1);
     max-width: 100px;
     border-radius: 10px;
     height: 30px;
-    color: #2563EB;
+    color: #2563eb;
 }
 
 .circle {
@@ -74,4 +75,23 @@
     border-radius: 50%; /* Làm cho phần tử tròn */
 
     vertical-align: middle;
+}
+.ant-pagination-item {
+    
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    a{
+
+        color: #94A3B8;
+    }
+    &-active{
+        a{
+
+            color: #007bff;
+        } 
+    }
+    &-link{
+        border-radius: 12px !important;
+    border: 1px solid #e2e8f0;
+    }
 }

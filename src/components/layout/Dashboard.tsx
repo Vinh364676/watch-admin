@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import logo from "../../assets/icon/logo.png";
 import "./Dashboard.scss";
 import { ROUTE_PATHS } from "../../constants/url-config";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 const Dashboard = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -30,25 +30,29 @@ const Dashboard = ({ children }: any) => {
         <div className="logo">
           <img src={logo} alt="" />
         </div>
-        <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.ItemGroup key="group" title="Home">
-            <Menu.Item key="1" icon={<HomeOutlined />}>
-              <Link to={ROUTE_PATHS.Home}>Dashboard</Link>
-            </Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup key="group" title="Other">
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-              <Link to={ROUTE_PATHS.Order}>Order</Link>
-            </Menu.Item>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={[
+            {
+              key: '1',
+              icon: <UserOutlined />,
+              label: <Link to={ROUTE_PATHS.Home}>Dashboard</Link>,
+            },
+            {
+              key: '2',
+              icon: <VideoCameraOutlined />,
+              label:  <Link to={ROUTE_PATHS.Order}>Order</Link>,
+            },
+            {
+              key: '3',
+              icon: <UploadOutlined />,
+              label: 'nav 3',
+            },
+          ]}
+        />
 
-          </Menu.ItemGroup>
-          <Menu.ItemGroup key="group" title="User">
-            <Menu.Item key="3" icon={<VideoCameraOutlined />}>
-              <Link to={ROUTE_PATHS.User}>User</Link>
-            </Menu.Item>
-
-          </Menu.ItemGroup>
-        </Menu>
       </Sider>
       <Layout className="layout">
         <div className="layout__dashboard">
