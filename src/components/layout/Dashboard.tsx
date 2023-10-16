@@ -10,8 +10,28 @@ import {
   MailOutlined,
   BellOutlined,
   SearchOutlined,
+  ShoppingCartOutlined,
+  SettingOutlined,
+  ShoppingOutlined,
+  MessageOutlined,
+  LogoutOutlined,
+  AppstoreOutlined,
+  RocketOutlined,
+  NodeCollapseOutlined,
+  NodeExpandOutlined
 } from "@ant-design/icons";
-import { Avatar, Badge, Button, Col, Input, Layout, Menu, Row } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  Popover,
+  Row,
+} from "antd";
 import React, { useState } from "react";
 import logo from "../../assets/icon/logo.png";
 import "./Dashboard.scss";
@@ -24,6 +44,49 @@ const Dashboard = ({ children }: any) => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [children]);
+  const content = (
+    <div>
+<div className="popover__content">
+      <div className="popover__content__left">
+      <div className="popover__content--cricle"></div>
+      <div>
+      <p>Phạm Quang Vinh</p>
+      <p>Thông báo abcder</p>
+      </div>
+      </div>
+      <div>
+        2hr
+      </div>
+    </div>
+    <div className="popover__content">
+      <div className="popover__content__left">
+      <div className="popover__content--cricle"></div>
+      <div>
+      <p>Phạm Quang Vinh</p>
+      <p>Thông báo abcder</p>
+      </div>
+      </div>
+      <div>
+        2hr
+      </div>
+    </div>
+    <div className="popover__content">
+      <div className="popover__content__left">
+      <div className="popover__content--cricle"></div>
+      <div>
+      <p>Phạm Quang Vinh</p>
+      <p>Thông báo abcder</p>
+      </div>
+      </div>
+      <div>
+        2hr
+      </div>
+    </div>
+    </div>
+    
+    
+  );
+  
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -31,28 +94,67 @@ const Dashboard = ({ children }: any) => {
           <img src={logo} alt="" />
         </div>
         <Menu
-          theme="dark"
+          className="menu__dashboard"
+          theme="light"
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={["1"]}
           items={[
             {
-              key: '1',
+              key: "1",
+              icon: <HomeOutlined />,
+              label: <Link to={ROUTE_PATHS.Home}>Trang chủ</Link>,
+            },
+            {
+              key: "2",
+              icon: <AppstoreOutlined />,
+              label: "Tính năng",
+              children:[
+                {
+                  key: "2.1",
+                  label: <Link to={ROUTE_PATHS.Product}>Sản phẩm</Link>,
+                  className: "menu__dashboard--label",
+                },
+                {
+                  key: "2.2",
+                  label: <Link to={ROUTE_PATHS.Brand}>Thương hiệu</Link>,
+                  className: "menu__dashboard--label",
+                },
+                {
+                  key: "2.3",
+                  label: <Link to={ROUTE_PATHS.Home}>Danh mục</Link>,
+                  className: "menu__dashboard--label",
+                },
+                {
+                  key: "2.4",
+                  label: <Link to={ROUTE_PATHS.Home}>Khác</Link>,
+                  className: "menu__dashboard--label",
+                },
+              ]
+            },
+            {
+              key: "3",
+              icon: <ShoppingCartOutlined />,
+              label: <Link to={ROUTE_PATHS.Order}>Đơn hàng</Link>,
+            },
+           
+            {
+              key: "4",
               icon: <UserOutlined />,
-              label: <Link to={ROUTE_PATHS.Home}>Dashboard</Link>,
+              label: <Link to={ROUTE_PATHS.User}>Người dùng</Link>,
             },
             {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label:  <Link to={ROUTE_PATHS.Order}>Order</Link>,
+              key: "5",
+              icon: <MessageOutlined />,
+              label: <Link to={ROUTE_PATHS.User}>Liên hệ</Link>,
             },
+
             {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
+              key: "6",
+              icon: <LogoutOutlined />,
+              label: <Link to={ROUTE_PATHS.User}>Đăng xuất</Link>,
             },
           ]}
         />
-
       </Sider>
       <Layout className="layout">
         <div className="layout__dashboard">
@@ -65,7 +167,7 @@ const Dashboard = ({ children }: any) => {
             <div className="layout__header--row">
               <div className="layout__header--menu">
                 {React.createElement(
-                  collapsed ? RightCircleOutlined : LeftCircleOutlined,
+                  collapsed ? NodeCollapseOutlined  : NodeExpandOutlined,
                   {
                     className: "trigger",
                     onClick: () => setCollapsed(!collapsed),
@@ -82,14 +184,19 @@ const Dashboard = ({ children }: any) => {
               </div>
               <div className="layout__header--icon">
                 <Badge count={5}>
-                  <Button className="layout__header__buttonCustom">
-                    <MailOutlined />
-                  </Button>
+                  <Popover placement="bottomRight" content={content} title="Notifications (3)" className="layout__header__popover" style={{width:400}}>
+                    <Button type="primary">
+                      <MailOutlined />
+                    </Button>
+                  </Popover>
                 </Badge>
                 <Button className="layout__header__buttonCustom">
                   <BellOutlined />
                 </Button>
-                <Avatar size="default" icon={<UserOutlined />} />
+                <Avatar size="default" icon={<UserOutlined />}>
+        
+                  </Avatar> 
+              
               </div>
             </div>
           </Header>

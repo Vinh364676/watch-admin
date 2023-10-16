@@ -8,6 +8,7 @@ import { showMessage } from "../../atoms/notification/notification";
 import AnonymousLayout from "./anonymous/anonymous";
 import MainLayout from './main/main';
 import Dashboard from "../../layout/Dashboard";
+import SignIn from "../../../pages/sign-in/sign-in";
 
 export interface LayoutProps {
   pageTitle: React.ReactNode;
@@ -19,6 +20,9 @@ const RouteLayout = ({ component: Component, ...rest }: any) => {
   const homePage = ROUTE_PATHS.Home;
   const [pageTitle, setPageTitle] = React.useState<React.ReactNode>("");
   const { isAuthenticated } = useAuthContext();
+  console.log('====================================');
+  console.log("isAuthenticated: ",isAuthenticated);
+  console.log('====================================');
 
   const isLoginRequired = rest.loginRequired;
   const expectedPermissions = rest.permissions as PERMISSION[];
@@ -34,28 +38,34 @@ const RouteLayout = ({ component: Component, ...rest }: any) => {
 
   const renderLayout = () => {
     if (isAuthenticated) {
-      if (!isLoginRequired) {
-        return <Redirect to={{ pathname: homePage }} />;
-      }
-      if (isLoginRequired) {
-        return (
-          <MainLayout>
-            <Component
-              pageTitle={pageTitle}
-              setPageTitle={setPageTitle}
-            />
-          </MainLayout>
-        );
-      }
-    } else {
-      if (isLoginRequired) {
-        return <Redirect to={{ pathname: ROUTE_PATHS.SignIn }} />;
-      }
       return (
-        <Dashboard>
-          <Component />
-        </Dashboard>
-      );
+          <Dashboard>
+            <Component />
+          </Dashboard>
+        );
+      // if (!isLoginRequired) {
+        
+      //   return <Redirect to={{ pathname: homePage }} />;
+      // }
+      // if (isLoginRequired) {
+      //   return (
+      //     <MainLayout>
+      //       <Component
+      //         pageTitle={pageTitle}
+      //         setPageTitle={setPageTitle}
+      //       />
+      //     </MainLayout>
+      //   );
+      // }
+    } else {
+      // if (isLoginRequired) {
+        return <SignIn />;
+      // }
+      // return (
+      //   <Dashboard>
+      //     <Component />
+      //   </Dashboard>
+      // );
     }
   };
 

@@ -1,5 +1,6 @@
 export type BrandState = {
-    brand: Array<Brand>;
+    brandList: Array<Brand>;
+    brandDetail:Brand
 };
 
 

@@ -51,7 +51,7 @@ import { ROUTE_PATHS } from "../../../../../constants/url-config";
                 <Button className="layout__header__buttonCustom">
                   <BellOutlined />
                 </Button>
-                <Avatar size="default" icon={<UserOutlined />} />
+                <Avatar size="default" className="layout__header__user" icon={<UserOutlined />} />
               </div>
             </div>
           </Header>

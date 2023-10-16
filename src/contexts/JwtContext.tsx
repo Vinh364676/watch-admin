@@ -104,26 +104,38 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const accessToken = storageAvailable
         ? LocalUtils.get(LOCAL_STORAGE_KEYS.ACCESS_TOKEN)
         : "";
+        console.log('====================================');
+        console.log("accessToken: ",accessToken);
+        console.log('====================================');
 
       if (accessToken) {
+        console.log('====================================');
+        console.log("authen");
+        console.log('====================================');
         LocalUtils.set(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
-        const user = jwtDecode<UserType>(accessToken);
-        const { Avatar, EmployeeId, Roles, Email, RefreshToken } = user;
-
+        // const user = jwtDecode<UserType>(accessToken);
+        // const { Avatar, EmployeeId, Roles, Email, RefreshToken } = user;
+        
         dispatch({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
             user: {
-              refreshToken: RefreshToken,
-              avatar: Avatar,
-              employeeId: EmployeeId,
-              email: Email,
-              roles: Roles,
+              // refreshToken: RefreshToken,
+              // avatar: Avatar,
+              // employeeId: EmployeeId,
+              // email: Email,
+              // roles: Roles,
+              refreshToken: 'RefreshToken',
+              avatar: 'Avatar',
+              employeeId: 'EmployeeId',
+              email: 'Email',
+              roles: 'Roles',
             },
           },
         });
       } else {
+
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -149,9 +161,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
+    
     const response = await authService.loginAsync({
-      userName: "test",
-      password: "test",
+      userName: email,
+      password,
       isRemember: true,
     });
 

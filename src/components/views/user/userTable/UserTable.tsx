@@ -24,7 +24,7 @@ const columns = [
     dataIndex: "product",
     render: (text: any, record: any) => (
       <span>
-        <img src={productImg} alt={text} style={{ marginRight: '8px' }} />
+        <img src={productImg} alt={text} style={{ marginRight: '8px',background:"rgb(241, 245, 249)" }} className="cardHistory__content--img" />
         {text}
       </span>
     ),

@@ -21,7 +21,7 @@ export const productPersistConfig = {
 
 const rootReducer = combineReducers({
   product: productReducer,
-  brand: brandReducer,
+   brand: brandReducer,
   news: newsReducer
 });
 

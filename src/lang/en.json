@@ -1,14 +1,27 @@
 {
-    "Login": {
-        "title": "Sign in",
-        "welcome": "Continue to your portal",
-        "email": "Email",
-        "password": "Password",
-        "continue": "Sign in",
-        "rememberMe": "Keep me signed in",
-        "forgotYourPassword": "Forgot your password?",
-        "logout": "Logout",
-        "emailRequired": "Please input your email!",
-        "passwordRequired": "Please input your password!"
+    "Router": {
+        "Home": "Trang chủ",
+        "SignIn": "Đăng nhập",
+        "SignUp": "Đăng ký",
+        "ForgotPassword": "Quên mật khẩu",
+        "Profile": "Hồ sơ",
+        "Order": "Đơn hàng",
+        "CreateOrder": "Tạo đơn hàng",
+        "User": "Người dùng",
+        "CreateUser": "Tạo người dùng",
+        "Product": "Sản phẩm",
+        "CreateProduct": "Tạo sản phẩm",
+        "EditProduct": "Chỉnh sửa sản phẩm",
+        "ForgotPassword": "Quên mật khẩu",
+        "Profile": "Hồ sơ",
+        "Order": "Đơn hàng",
+        "CreateOrder": "Tạo đơn hàng",
+        "User": "Người dùng",
+        "CreateUser": "Tạo người dùng",
+        "Product": "Sản phẩm",
+        "CreateProduct": "Tạo sản phẩm",
+        "EditProduct": "Chỉnh sửa sản phẩm"
     }
-}
+
+   
+  }

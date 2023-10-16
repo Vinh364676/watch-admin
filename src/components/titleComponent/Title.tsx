@@ -2,9 +2,11 @@ import { Button } from "antd";
 import BreadcrumbHeader from "../breadcrumb/Breadcrumb";
 import "./Title.scss";
 import {
-    UserAddOutlined
+    UserAddOutlined,
+    PlusOutlined
   } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import ButtonCustom from "../button-custom/ButtonCustom";
 type Prop={
     title:string;
     isPrimary?:boolean;
@@ -19,10 +21,10 @@ const TitleComponent = ({title, isPrimary=true, to}:Prop) => {
         </div>
         {isPrimary && to ? ( // Check if both isPrimary and to are truthy
         <Link to={to}>
-          <Button className="button__Custom"><UserAddOutlined />Tạo mới</Button>
+          <ButtonCustom icon={<PlusOutlined />} title="Tạo mới"/>
         </Link>
       ) : (
-        isPrimary && <Button className="button__Custom"><UserAddOutlined />Tạo mới</Button>
+        isPrimary && <ButtonCustom icon={<PlusOutlined />} title="Tạo mới"/>
       )}
         </div>
     );

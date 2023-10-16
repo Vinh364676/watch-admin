@@ -1,0 +1,15 @@
+{
+    "Router": {
+        "Home": "Trang chủ",
+        "SignIn": "Đăng nhập",
+        "SignUp": "Đăng ký",
+        "brand":"Thương hiệu",
+        "product":"Sản phẩm",
+        "create":"Tạo mới",
+        "edit":"Chỉnh sửa",
+        "order":"Đơn hàng"
+
+    }
+
+   
+  }

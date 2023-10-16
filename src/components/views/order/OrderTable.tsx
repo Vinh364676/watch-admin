@@ -8,6 +8,7 @@ import {
   CheckCircleOutlined 
 } from "@ant-design/icons";
 import "./OrderTable.scss";
+import ButtonCustom from "../../button-custom/ButtonCustom";
 const columns = [
   {
     title: "Order ID",
@@ -126,12 +127,8 @@ const OrderTable = () => {
               {hasSelected ? `${selectedRowKeys.length} Selected` : ""}
             </span>
           </div>
-          <Button>
-            <DownloadOutlined /> Export
-          </Button>
-          <Button>
-            <FilterOutlined /> Filter
-          </Button>
+          <ButtonCustom icon={<DownloadOutlined />} title="Export"/>
+          <ButtonCustom icon={<FilterOutlined />} title="Filter"/>
         </div>
       </Row>
       <Table

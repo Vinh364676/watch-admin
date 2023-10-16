@@ -21,8 +21,11 @@
             &--button {
                 display: flex;
                 flex-direction: row-reverse;
+                align-items: center;
                 .button__item {
                     margin-left: 8px;
+                    height: 42px;
+                    border-radius: 12px;
                 }
             }
         }

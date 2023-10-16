@@ -13,7 +13,9 @@ import { AuthProvider } from './contexts/JwtContext';
 
 
 function App() {
-
+	console.log('====================================');
+	console.log(routes);
+	console.log('====================================');
 	return (
 		<div className="App">
 			<AuthProvider>

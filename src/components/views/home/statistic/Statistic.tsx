@@ -6,18 +6,10 @@ import totalreturn from  "../../../../assets/images/home/return.svg";
 import revenue from  "../../../../assets/images/home/totalRevenue.svg";
 import { dispatch, useSelector } from "../../../../redux/store";
 import { useEffect } from "react";
-import { getBrand } from "../../../../redux/slices/brand";
+
 type Props = {};
 const TotalStatistic = (props: Props) => {
-    const {brand} = useSelector(state => state.brand);
-    useEffect(() => {
-        dispatch(
-          getBrand({
-            pageIndex: 1,
-            pageSize: 100,
-          })
-        );
-      }, []);
+    
   return (
     <div className="totalStatistic">
         

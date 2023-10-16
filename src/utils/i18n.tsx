@@ -3,6 +3,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import fr from "../lang/fr.json";
 import en from "../lang/en.json";
+import vn from "../lang/vi.json";
 import { CookieConstants } from "../constants/local";
 
 i18n
@@ -10,10 +11,11 @@ i18n
   .use(initReactI18next)
   .init({
     interpolation: { escapeValue: false },
-    lng: localStorage.getItem(CookieConstants.LANGUAGE) || "en",
+    lng: localStorage.getItem(CookieConstants.LANGUAGE) || "vn",
     resources: {
       en: { common: en },
-      fr: { common: fr }
+      fr: { common: fr },
+      vn: {common:vn }
     },
     // debug: true,
     react: {
@@ -24,6 +26,6 @@ i18n
   });
 
 export const getCurrentLang = () =>
-  i18n.language || window.localStorage.i18nextLng || "en";
+  i18n.language || window.localStorage.i18nextLng || "vn";
 
 export default i18n;

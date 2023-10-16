@@ -1,5 +1,6 @@
-import { AxiosResponse } from "axios"
-import { getAsync } from "../http-client";
+
+import { AxiosResponse } from "axios";
+import { deleteAsync, getAsync, postAsync, putAsync } from "../http-client";
 
 class BrandService {
   get = async (params: any): Promise<AxiosResponse> => {
@@ -8,9 +9,19 @@ class BrandService {
       isPublish: true
     })
   }
-//   getOne = async (id: any): Promise<AxiosResponse> => {
-//     return await getAsync(`/Brand/GetAll/${id}`)
-//   }
+  delete = async (id: any): Promise<AxiosResponse> => {
+    return await deleteAsync(`/Brand/Delete/${id}`);
+  }
+  post = async (data: any): Promise<AxiosResponse> => {
+    return await postAsync('/Brand/Create', data);
+  }
+  put = async (id: any, data: any): Promise<AxiosResponse> => {
+    return await putAsync(`/Brand/Update/${id}`, data); 
+  }
+
+  getById = async (id: any): Promise<AxiosResponse> => {
+    return await getAsync(`/Brand/GetById/${id}`)
+  }
 }
 
 export default new BrandService();

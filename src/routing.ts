@@ -1,8 +1,14 @@
 import { ROUTE_PATHS } from "./constants/url-config";
 import { PERMISSION } from "./guards/role-guard";
+import BrandPage from "./pages/brand/BrandPage";
+import CreateBrand from "./pages/brand/create/CreateBrand";
+import EditBrand from "./pages/brand/edit/EditBrand";
 import HomePage from './pages/home/home';
 import OrderPage from "./pages/order/Order";
 import CreateOrder from "./pages/order/create/CreateOrder";
+import CreateProduct from "./pages/product/create/CreateProduct";
+import EditProduct from "./pages/product/edit/EditProduct";
+import ProductPage from "./pages/product/productPage";
 import SignIn from './pages/sign-in/sign-in';
 import UserPage from "./pages/user/User";
 import CreateUser from "./pages/user/create/CreateUser";
@@ -34,6 +40,8 @@ const anonymousPage: Route[] = [
         component: SignIn,
         hidden: true,
         permissions: [],
+        loginRequired: true,
+
     },
 ]
 
@@ -78,7 +86,54 @@ const authorizedPage: Route[] = [
         permissions: [],
         loginRequired: false,
     },
-    
+    {
+        href: ROUTE_PATHS.Product,
+        exact: true,
+        component: ProductPage,
+        title: "Product",
+        permissions: [],
+        loginRequired: false,
+    },
+    {
+        href: ROUTE_PATHS.CreateProduct,
+        exact: true,
+        component: CreateProduct,
+        title: "CreateProduct",
+        permissions: [],
+        loginRequired: false,
+    },
+    {
+        href: ROUTE_PATHS.EditProduct,
+        exact: true,
+        component: EditProduct,
+        title: "EditProduct",
+        permissions: [],
+        loginRequired: false,
+    },
+    {
+        href: ROUTE_PATHS.Brand,
+        exact: true,
+        component: BrandPage,
+        title: "Brand",
+        permissions: [],
+        loginRequired: false,
+    },
+    {
+        href: ROUTE_PATHS.CreateBrand,
+        exact: true,
+        component: CreateBrand,
+        title: "CreateBrand",
+        permissions: [],
+        loginRequired: false,
+    },
+    {
+        href: ROUTE_PATHS.EditBrand,
+        exact: true,
+        component: EditBrand,
+        title: "CreateBrand",
+        permissions: [],
+        loginRequired: false,
+    },
 ]
 
 export const routes: Route[] = [...anonymousPage, ...authorizedPage]
