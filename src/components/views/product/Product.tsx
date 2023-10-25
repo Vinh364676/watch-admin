@@ -5,115 +5,163 @@ import {
   DownloadOutlined,
   FilterOutlined,
   CheckCircleOutlined,
-  EditOutlined
+  EditOutlined,
 } from "@ant-design/icons";
 import productImg from "../../../assets/images/product/product.svg";
 import productImg1 from "../../../assets/images/product/product1.jpg";
 import deleteIcon from "../../../assets/images/product/deleteIcon.svg";
-import "./Product.scss";
 import { Dropdown, Menu, Modal, notification } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTE_PATHS } from "../../../constants/url-config";
+import { dispatch, useSelector } from "../../../redux/store";
+import { deleteBrand, getBrand } from "../../../redux/slices/brand";
+import "./Product.scss";
+import moment from "moment";
+import { deleteProduct, getProduct } from "../../../redux/slices/product";
+import { getCategory } from "../../../redux/slices/category";
 const { Item, Divider } = Menu;
-
-
-
 const ProductTable = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const showNotification = () => {
-        notification.success({
-            className:"notification__item",
-          message: 'Xóa thành công',
-        //   description: 'Sản phẩm đã được xóa thành công!',
-        duration: 3
-        });
-      };
-  const showModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { productList } = useSelector((state) => state.product);
+  const { categoryList } = useSelector(state => state.category);
+  const { brandList } = useSelector(state => state.brand);
+  // console.log(productList)
+   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  console.log(selectedProductId);
+  useEffect(() => {
+    dispatch(
+      getCategory({
+        pageIndex: 1,
+        pageSize: 100,
+      })
+    );
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getBrand({
+        pageIndex: 1,
+        pageSize: 100,
+      })
+    );
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getProduct({
+        pageIndex: 1,
+        pageSize: 100,
+      })
+    );
+  }, []);
+  const showNotification = () => {
+    notification.success({
+      className: "notification__item",
+      message: "Xóa thành công",
+      //   description: 'Sản phẩm đã được xóa thành công!',
+      duration: 3,
+    });
+  };
+  const showModal = (id: number) => {
+    setSelectedProductId(id);
     setIsModalOpen(true);
+    console.log()
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-    showNotification();
+  const handleOk = async () => {
+    if (selectedProductId !== null) {
+      try {
+        await dispatch(deleteProduct(selectedProductId));
+      
+        setSelectedProductId(null);
+        setIsModalOpen(false);
+        showNotification()
+      } catch (error) {
+        console.error("Error deleting brand:", error);
+      }
+    }
   };
+  
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const dataForTable = productList.map((product, index) => {
+    const category = categoryList.find(category => category.id === product.categoryId);
+    const categoryName = category ? category.name : "Unknown Category";
+    const brand = brandList.find(brand => brand.id === product.brandId);
+    const brandName = brand ? brand.name : "Unknown Category";
+    const formattedPrice = (+product.price).toLocaleString("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    const formattedDateCreate = moment(product.createdDT).format("DD-MM-YYYY");
 
+    return {
+      key: index,
+      id: product.id,
+      name: product.productName,
+      thumnail: product.thumnail,
+      category: categoryName,
+      brand:brandName,
+      quantity:product.quantity,
+      price:formattedPrice,
+      status:product.status,
+      dateCreate:formattedDateCreate
+    };
+  });
   const columns = [
     {
       title: "Mã sản phẩm",
-      dataIndex: "productID",
-      width: 100,
-    },
-    {
-      title: "Sản phẩm",
-      width: 360,
-      dataIndex: "product",
-      className: "img__cell",
-      render: (text: any, record: any) => (
-        <span className="img__cell">
-          <img
-            src={record.imageSrc}
-            alt={text}
-            style={{
-              width: "60px",
-              height: "60px",
-              marginRight: "8px",
-              background: "rgb(241, 245, 249)",
-            }}
-            className="cardHistory__content--img"
-          />
-          {text}
-        </span>
-      ),
-    },
-  
-    {
-      title: "Thương hiệu",
-      dataIndex: "category",
+      dataIndex: "id",
       width: 150,
     },
     {
-      title: "Số lượng",
-      dataIndex: "quantity",
-      width: 100,
-    },
-    {
-      title: "Giá bán",
-      dataIndex: "price",
-      width: 100,
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      render: (text: any, record: any) => (
-        <span>
-          {text === "Published" ? (
-            <span className="status__publish">{text}</span>
-          ) : null}
-          {text === "Low Stock" ? (
-            <span className="status__low">{text}</span>
-          ) : null}
-        </span>
-      ),
-      width: 100,
-    },
+      title: "Tên sản phẩm",
+      dataIndex: "name",
+      width: 600,
+      render: (text:any, record:any) => (
+        <div>
+          <img className="product__table__img" src={record.thumnail} style={{ width: '50px' }} />
+          {text}
+        </div>
+        ),
+      },
+      {
+        title: "Thương hiệu",
+        dataIndex: "brand",
+        width: 150,
+      },
+      {
+        title: "Danh mục",
+        dataIndex: "category",
+        width: 150,
+      },
+      {
+        title: "Số lượng",
+        dataIndex: "quantity",
+        width: 150,
+      },
+      {
+        title: "Giá",
+        dataIndex: "price",
+        width: 150,
+      },
+      {
+        title: "Trạng thái",
+        dataIndex: "status",
+        width: 150,
+      },
     {
       title: "Ngày tạo",
-      dataIndex: "date",
-      width: 100,
+       dataIndex: "dateCreate",
+      width: 300,
     },
     {
       title: "Thao tác",
       dataIndex: "action",
       render: (text: any, record: any) => (
         <span className="table__action">
-          {/* <a onClick={() => handleDelete(record.key)}> */}
-<Dropdown
+          <Dropdown
             placement="bottomRight"
             menu={{
               items: [
@@ -122,17 +170,17 @@ const ProductTable = () => {
                   key: "0",
                   icon: <DeleteOutlined />,
                   className: "drop--delete",
-                  onClick: () => showModal(),
+                  onClick: () => showModal(record.id),
                 },
-                {
-                  // label: (
-                  //   <Link to={ROUTE_PATHS.EditBrand.replace(":id", record.brandID.toString())}>
-                  //     Sửa
-                  //   </Link>
-                  // ),
-                  key: "1",
-                  icon: <EditOutlined />,
-                },
+                // {
+                //   label: (
+                //     <Link to={ROUTE_PATHS.EditBrand.replace(":id", record.brandID.toString())}>
+                //       Sửa
+                //     </Link>
+                //   ),
+                //   key: "1",
+                //   icon: <EditOutlined />,
+                // },
               ],
             }}
             className="table__action__dropdown"
@@ -147,55 +195,28 @@ const ProductTable = () => {
       width: 100,
     },
   ];
-  const data = [
-    {
-      key: 1,
-      product: "MICHAEL KORS MINI ",
-      productID: "1",
-      category: "casio",
-      date: "27/09/2023",
-      price: "1.234.567",
-      quantity: "1000",
-      customer: "Bessie Cooper",
-      status: "Low Stock",
-      imageSrc: productImg,
-    },
-    {
-      key: 2,
-      product: "OMEGA DE VILLE PRESTIGE WATCH 39.5MM",
-      productID: "2",
-      category: "omega",
-      date: "27/09/2023",
-      price: "11,900,000",
-      quantity: "234",
-      status: "Published",
-      imageSrc: productImg1,
-    },
-    {
-      key: 3,
-      product: "LONGINES MASTER WATCH 38.5MM",
-      productID: "2",
-      category: "rolex",
-      date: "27/09/2023",
-      price: "11,900,000",
-      quantity: "234",
-      status: "Dark",
-      imageSrc: productImg1,
-    },
-  ];
 
   return (
     <>
       <TableComponent
         columns={columns}
-        data={data}
+        data={dataForTable}
         placeholder="Tìm kiếm sản phẩm"
       />
-       <Modal centered open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  className="modal__product" okType={"danger"}>
-        <img src={deleteIcon} alt=""  className="modal__product__icon"/>
-         <div className="modal__product__content">
-        <h2 className="modal__product__content--title">Xóa sản phẩm</h2>
-        <p className="modal__product__content--desc">Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
+      <Modal
+        centered
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        className="modal__product"
+        okType={"danger"}
+      >
+        <img src={deleteIcon} alt="" className="modal__product__icon" />
+        <div className="modal__product__content">
+          <h2 className="modal__product__content--title">Xóa sản phẩm</h2>
+          <p className="modal__product__content--desc">
+            Bạn có chắc chắn muốn xóa sản phẩm này không?
+          </p>
         </div>
       </Modal>
     </>

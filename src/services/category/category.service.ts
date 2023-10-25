@@ -2,26 +2,26 @@
 import { AxiosResponse } from "axios";
 import { deleteAsync, getAsync, postAsync, putAsync } from "../http-client";
 
-class BrandService {
+class CategoryService {
   get = async (params: any): Promise<AxiosResponse> => {
-    return await getAsync('/Brand/GetAll', {
+    return await getAsync('/Category/GetAll', {
       ...params,
       isPublish: true
     })
   }
   delete = async (id: any): Promise<AxiosResponse> => {
-    return await deleteAsync(`/Brand/Delete/${id}`);
+    return await deleteAsync(`/Category/Delete/${id}`);
   }
   post = async (data: any): Promise<AxiosResponse> => {
-    return await postAsync('/Brand/Create', data);
+    return await postAsync('/Category/Create', data);
   }
   put = async (id: any, data: any): Promise<AxiosResponse> => {
-    return await putAsync('/Brand/Update', data); 
+    return await putAsync('Category/Update', data); 
   }
 
   getById = async (id: any): Promise<AxiosResponse> => {
-    return await getAsync(`/Brand/GetById/${id}`)
+    return await getAsync(`/Category/GetById/${id}`)
   }
 }
 
-export default new BrandService();
+export default new CategoryService();

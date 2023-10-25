@@ -3,6 +3,10 @@ import { PERMISSION } from "./guards/role-guard";
 import BrandPage from "./pages/brand/BrandPage";
 import CreateBrand from "./pages/brand/create/CreateBrand";
 import EditBrand from "./pages/brand/edit/EditBrand";
+import CategoryPage from "./pages/category/CategoryPage";
+import CreateCategory from "./pages/category/create/CreateCategory";
+import EditCategory from "./pages/category/edit/EditCategory";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import HomePage from './pages/home/home';
 import OrderPage from "./pages/order/Order";
 import CreateOrder from "./pages/order/create/CreateOrder";
@@ -52,6 +56,14 @@ const authorizedPage: Route[] = [
         component: HomePage,
         title: "Home",
         permissions: [],
+        loginRequired: true,
+    },
+    {
+        href: ROUTE_PATHS.ForgotPassword,
+        exact: true,
+        component: ForgotPassword,
+        title: "ForgotPassword",
+        permissions: [],
         loginRequired: false,
     },
     {
@@ -60,7 +72,7 @@ const authorizedPage: Route[] = [
         component: OrderPage,
         title: "Order",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.CreateOrder,
@@ -68,7 +80,7 @@ const authorizedPage: Route[] = [
         component: CreateOrder,
         title: "CreateOrder",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.User,
@@ -76,7 +88,7 @@ const authorizedPage: Route[] = [
         component: UserPage,
         title: "User",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.CreateUser,
@@ -84,7 +96,7 @@ const authorizedPage: Route[] = [
         component: CreateUser,
         title: "CreateUser",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.Product,
@@ -92,7 +104,7 @@ const authorizedPage: Route[] = [
         component: ProductPage,
         title: "Product",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.CreateProduct,
@@ -100,7 +112,7 @@ const authorizedPage: Route[] = [
         component: CreateProduct,
         title: "CreateProduct",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.EditProduct,
@@ -108,7 +120,7 @@ const authorizedPage: Route[] = [
         component: EditProduct,
         title: "EditProduct",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.Brand,
@@ -116,7 +128,7 @@ const authorizedPage: Route[] = [
         component: BrandPage,
         title: "Brand",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.CreateBrand,
@@ -124,7 +136,7 @@ const authorizedPage: Route[] = [
         component: CreateBrand,
         title: "CreateBrand",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
     },
     {
         href: ROUTE_PATHS.EditBrand,
@@ -132,7 +144,31 @@ const authorizedPage: Route[] = [
         component: EditBrand,
         title: "CreateBrand",
         permissions: [],
-        loginRequired: false,
+        loginRequired: true,
+    },
+    {
+        href: ROUTE_PATHS.Category,
+        exact: true,
+        component: CategoryPage,
+        title: "Category",
+        permissions: [],
+        loginRequired: true,
+    },
+    {
+        href: ROUTE_PATHS.CreateCategory,
+        exact: true,
+        component: CreateCategory,
+        title: "CreateCategory",
+        permissions: [],
+        loginRequired: true,
+    },
+    {
+        href: ROUTE_PATHS.EditCategory,
+        exact: true,
+        component: EditCategory,
+        title: "EditCategory",
+        permissions: [],
+        loginRequired: true,
     },
 ]
 

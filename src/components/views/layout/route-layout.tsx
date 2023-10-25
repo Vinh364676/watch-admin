@@ -9,6 +9,7 @@ import AnonymousLayout from "./anonymous/anonymous";
 import MainLayout from './main/main';
 import Dashboard from "../../layout/Dashboard";
 import SignIn from "../../../pages/sign-in/sign-in";
+import ForgotPassword from "../../../pages/forgot-password/ForgotPassword";
 
 export interface LayoutProps {
   pageTitle: React.ReactNode;
@@ -20,9 +21,7 @@ const RouteLayout = ({ component: Component, ...rest }: any) => {
   const homePage = ROUTE_PATHS.Home;
   const [pageTitle, setPageTitle] = React.useState<React.ReactNode>("");
   const { isAuthenticated } = useAuthContext();
-  console.log('====================================');
-  console.log("isAuthenticated: ",isAuthenticated);
-  console.log('====================================');
+
 
   const isLoginRequired = rest.loginRequired;
   const expectedPermissions = rest.permissions as PERMISSION[];
@@ -58,15 +57,14 @@ const RouteLayout = ({ component: Component, ...rest }: any) => {
       //   );
       // }
     } else {
-      // if (isLoginRequired) {
+      if (isLoginRequired) {
         return <SignIn />;
-      // }
-      // return (
-      //   <Dashboard>
-      //     <Component />
-      //   </Dashboard>
-      // );
+      }
+      return (
+          <Component />
+      );
     }
+    
   };
 
   return <Route {...rest} render={renderLayout} />;

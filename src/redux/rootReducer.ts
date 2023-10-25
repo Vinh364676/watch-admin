@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 import productReducer from "./slices/product";
 import newsReducer from "./slices/news";
 import brandReducer from "./slices/brand";
+import categoryReducer from "./slices/category";
 // ----------------------------------------------------------------------
 
 export const rootPersistConfig = {
@@ -22,7 +23,8 @@ export const productPersistConfig = {
 const rootReducer = combineReducers({
   product: productReducer,
    brand: brandReducer,
-  news: newsReducer
+  news: newsReducer,
+  category:categoryReducer
 });
 
 export default rootReducer;

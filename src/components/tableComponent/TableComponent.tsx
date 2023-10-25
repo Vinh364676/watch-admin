@@ -18,7 +18,7 @@ type Prop={
 const TableComponent = ({columns, data,placeholder}:Prop) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [searchText, setSearchText] = useState("");
+   const [searchText, setSearchText] = useState("");
 
   const start = () => {
     setLoading(true);
@@ -31,16 +31,16 @@ const TableComponent = ({columns, data,placeholder}:Prop) => {
   const onSelectChange = (newSelectedRowKeys: any) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
-    // setSearchText(""); // Đặt giá trị tìm kiếm thành rỗng khi chọn/deselect các hàng
+    setSearchText("");
   };
   const handleSearch = (e: any) => {
     const { value } = e.target;
-    // setSearchText(value);
+     setSearchText(value);
   };
     
-//   const filteredData = data.filter((item: any) =>
-//   item.name.toLowerCase().includes(searchText.toLowerCase())
-// );
+  const filteredData = data.filter((item: any) =>
+  item.name.toLowerCase().includes(searchText.toLowerCase())
+);
 
   const rowSelection = {
     selectedRowKeys,
@@ -87,7 +87,7 @@ const TableComponent = ({columns, data,placeholder}:Prop) => {
         className="table__table"
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={data}
+        dataSource={filteredData}
         pagination={false}
       />
       <Pagination className="table__pagination" defaultCurrent={1} total={50} />

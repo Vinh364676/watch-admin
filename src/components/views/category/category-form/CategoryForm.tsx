@@ -1,56 +1,52 @@
 import { Button, Form, Input, message, notification } from "antd";
 import { Link, useHistory, useParams } from "react-router-dom";
 import ButtonCustom from "../../../button-custom/ButtonCustom";
-import "./BrandForm.scss";
 import { ROUTE_PATHS } from "../../../../constants/url-config";
 import { dispatch, useDispatch, useSelector } from "../../../../redux/store";
-import {
-  createBrand,
-  getBrand,
-  getByIdBrand,
-  updateBrand,
-} from "../../../../redux/slices/brand";
 import { useEffect, useState } from "react";
-import ButtonFeat from "../../../button-feat/ButtonFeat";
-
+import "./CategoryForm.scss";
+import {
+  createCategory,
+  getCategory,
+  updateCategory,
+} from "../../../../redux/slices/category";
 type Prop = {
   isEdit?: boolean;
   selected?: { id: string } | null;
 };
-const handleCreateNew = () => {};
-const BrandForm = ({ isEdit = false, selected }: Prop) => {
-  const { brandList } = useSelector((state) => state.brand);
+const CategoryForm = ({ isEdit = false, selected }: Prop) => {
+  const { categoryList } = useSelector((state) => state.category);
   useEffect(() => {
     dispatch(
-      getBrand({
+      getCategory({
         pageIndex: 1,
         pageSize: 100,
       })
     );
   }, []);
-  console.log(selected);
-  const selectedBrandName = selected
-    ? brandList.find((brand) => brand.id === parseInt(selected.id))?.name
+  const selectedCategoryName = selected
+    ? categoryList.find((category) => category.id === parseInt(selected.id))
+        ?.name
     : undefined;
-  console.log(selectedBrandName);
-  const initialValue = isEdit && selected ? selectedBrandName : undefined;
+  console.log(selectedCategoryName);
+  const initialValue = isEdit && selected ? selectedCategoryName : undefined;
 
   const onFinish = (values: any) => {
     const { name } = values;
 
     if (isEdit && selected) {
       if (
-        brandList.some(
-          (brand) => brand.name === name && name !== selectedBrandName
+        categoryList.some(
+          (category) => category.name === name && name !== selectedCategoryName
         )
       ) {
         notification.error({
           className: "notification__item notification__item--error",
-          message: "Tên thương hiệu đã tồn tại",
+          message: "Tên danh mục đã tồn tại",
           duration: 3,
         });
       } else {
-        dispatch(updateBrand({ id: selected.id, name: values.name }))
+        dispatch(updateCategory({ id: selected.id, name: values.name }))
           .unwrap()
           .then((response) => {
             notification.success({
@@ -59,7 +55,7 @@ const BrandForm = ({ isEdit = false, selected }: Prop) => {
               duration: 3,
             });
             setTimeout(function () {
-              window.location.href = "/brand";
+              window.location.href = "/category";
             }, 3000);
           })
           .catch((error) => {
@@ -72,15 +68,15 @@ const BrandForm = ({ isEdit = false, selected }: Prop) => {
           });
       }
     } else if (!isEdit) {
-      if (brandList.some((brand) => brand.name === name)) {
+      if (categoryList.some((category) => category.name === name)) {
         // Kiểm tra xem tên thương hiệu đã tồn tại khi tạo mới
         notification.error({
           className: "notification__item notification__item--error",
-          message: "Tên thương hiệu đã tồn tại",
+          message: "Tên danh mục đã tồn tại",
           duration: 3,
         });
       } else {
-        dispatch(createBrand(values))
+        dispatch(createCategory(values))
           .unwrap()
           .then((response) => {
             notification.success({
@@ -89,11 +85,11 @@ const BrandForm = ({ isEdit = false, selected }: Prop) => {
               duration: 3,
             });
             setTimeout(function () {
-              window.location.href = "/brand";
+              window.location.href = "/category";
             }, 3000);
           })
           .catch((error) => {
-            console.error("Error creating brand:", error);
+            console.error("Error creating category:", error);
             notification.error({
               className: "notification__item",
               message: "Lỗi2",
@@ -103,10 +99,9 @@ const BrandForm = ({ isEdit = false, selected }: Prop) => {
       }
     }
   };
-
   return (
     <Form
-      className="brand__form"
+      className="category__form"
       name="basic"
       onFinish={onFinish}
       // onFinishFailed={onFinishFailed}
@@ -122,16 +117,28 @@ const BrandForm = ({ isEdit = false, selected }: Prop) => {
         ]}
       >
         <Input
-          placeholder="Tên thương hiệu"
-          className="brand__form__input"
+          placeholder="Tên danh mục"
+          className="category__form__input"
           defaultValue={initialValue}
         />
       </Form.Item>
-      <Form.Item className="brand__form__buttonGroup">
-       <ButtonFeat link={ROUTE_PATHS.Brand}
-            onCreateNew={handleCreateNew} handleName={isEdit ? "Lưu" : "Tạo mới"}/>
+      <Form.Item className="category__form__buttonGroup">
+        <Button
+          type="primary"
+          htmlType="button"
+          className="category__form__buttonGroup__button category__form__buttonGroup__button--cancel"
+        >
+          <Link to={ROUTE_PATHS.Category}>Quay lại</Link>
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="category__form__buttonGroup__button "
+        >
+          Tạo mới
+        </Button>
       </Form.Item>
     </Form>
   );
 };
-export default BrandForm;
+export default CategoryForm;

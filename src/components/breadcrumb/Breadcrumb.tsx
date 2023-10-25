@@ -26,9 +26,7 @@ const BreadcrumbHeader = () => {
             <Link to="/">{t("Router.Home")}</Link>
           </Breadcrumb.Item>
           {pathnames.map((item, index) => {
-            console.log('====================================');
-            console.log(item);
-            console.log('====================================');
+     
             const name = t(`Router.${item}`)
             return (
             <Breadcrumb.Item key={index}>

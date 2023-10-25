@@ -29,6 +29,7 @@ import {
   Input,
   Layout,
   Menu,
+  Modal,
   Popover,
   Row,
 } from "antd";
@@ -36,7 +37,9 @@ import React, { useState } from "react";
 import logo from "../../assets/icon/logo.png";
 import "./Dashboard.scss";
 import { ROUTE_PATHS } from "../../constants/url-config";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import LocalUtils from "../../utils/local";
+import { LOCAL_STORAGE_KEYS } from "../../constants/local";
 const { Header, Sider, Content } = Layout;
 const Dashboard = ({ children }: any) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -86,6 +89,16 @@ const Dashboard = ({ children }: any) => {
     
     
   );
+  const history = useHistory();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
+    setIsModalVisible(false); 
+    window.location.href = '/SignIn';
+  };
   
   return (
     <Layout>
@@ -121,7 +134,7 @@ const Dashboard = ({ children }: any) => {
                 },
                 {
                   key: "2.3",
-                  label: <Link to={ROUTE_PATHS.Home}>Danh mục</Link>,
+                  label: <Link to={ROUTE_PATHS.Category}>Danh mục</Link>,
                   className: "menu__dashboard--label",
                 },
                 {
@@ -151,7 +164,8 @@ const Dashboard = ({ children }: any) => {
             {
               key: "6",
               icon: <LogoutOutlined />,
-              label: <Link to={ROUTE_PATHS.User}>Đăng xuất</Link>,
+              label: "Đăng xuất",
+              //onClick: openModal,
             },
           ]}
         />
@@ -204,6 +218,7 @@ const Dashboard = ({ children }: any) => {
         </div>
       </Layout>
     </Layout>
+    
   );
 };
 export default Dashboard;

@@ -5,8 +5,10 @@ import { useState } from "react";
 import checkoutIcon from "../../assets/images/product/checkout.png";
 type Prop={
   link: string;
+  onCreateNew: () => void;
+  handleName:string;
 }
-const ButtonFeat = ({link}:Prop) => {
+const ButtonFeat = ({link,onCreateNew,handleName }:Prop) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -26,8 +28,8 @@ const ButtonFeat = ({link}:Prop) => {
           {/* <Link to={ROUTE_PATHS.Product}>Quay lại</Link> */}
           Quay lại
         </Button>
-      <Button type="primary" htmlType="submit" className="brand__form__buttonGroup__button ">
-          Tạo mới
+      <Button type="primary" htmlType="submit" className="brand__form__buttonGroup__button " onClick={onCreateNew}>
+          {handleName}
         </Button>
         <Modal centered open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  className="modal__product" okType={"danger"}>
             <img src={checkoutIcon} alt="" className="modal__product__checkout"/>

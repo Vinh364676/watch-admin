@@ -104,14 +104,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const accessToken = storageAvailable
         ? LocalUtils.get(LOCAL_STORAGE_KEYS.ACCESS_TOKEN)
         : "";
-        console.log('====================================');
-        console.log("accessToken: ",accessToken);
-        console.log('====================================');
 
       if (accessToken) {
-        console.log('====================================');
-        console.log("authen");
-        console.log('====================================');
+       
         LocalUtils.set(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
         // const user = jwtDecode<UserType>(accessToken);
         // const { Avatar, EmployeeId, Roles, Email, RefreshToken } = user;

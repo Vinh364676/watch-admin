@@ -20,7 +20,11 @@ enum ROUTE_PATHS {
 	//brand
 	"Brand" = "/brand",
 	"CreateBrand" = "/brand/create",
-	"EditBrand" = `/brand/edit/:id`
+	"EditBrand" = `/brand/edit/:id`,
+	// category
+	"Category" = "/category",
+	"CreateCategory" = "/category/create",
+	"EditCategory" = "/category/edit/:id"
 
 }
 

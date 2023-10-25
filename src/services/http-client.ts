@@ -42,6 +42,7 @@ const axiosInstance = (
 			return response
 		},
 		(error) => {
+		
 			if (isShowLoading) toggleLoading(false)
 			let _error: ResponseMessage = {
 				type: "error",
@@ -53,6 +54,7 @@ const axiosInstance = (
 				let status = error.response.status
 				// when UnAuthorize
 				if (status === HttpStatus.UNAUTHORIZED || status === HttpStatus.FORBIDDEN) {
+					
 					handleUnAuthorize()
 				}
 			}

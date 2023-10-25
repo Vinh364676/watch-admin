@@ -2,33 +2,38 @@ import TableComponent from "../../tableComponent/TableComponent";
 import {
   EllipsisOutlined,
   DeleteOutlined,
+  DownloadOutlined,
+  FilterOutlined,
+  CheckCircleOutlined,
   EditOutlined,
 } from "@ant-design/icons";
 import deleteIcon from "../../../assets/images/product/deleteIcon.svg";
-import { Dropdown, Menu, Modal, notification } from "antd";
+import { Dropdown, Modal, notification } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTE_PATHS } from "../../../constants/url-config";
 import { dispatch, useSelector } from "../../../redux/store";
-import { deleteBrand, getBrand } from "../../../redux/slices/brand";
 import moment from "moment";
 import { getProduct } from "../../../redux/slices/product";
+import { deleteCategory, getCategory } from "../../../redux/slices/category";
 
-const BrandTable = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { brandList } = useSelector((state) => state.brand);
+
+
+const CategoryTable = () => {
+  const {categoryList} = useSelector(state => state.category);
   const {productList} = useSelector(state => state.product);
-  console.log(brandList)
-  const [selectedBrandId, setSelectedBrandId] = useState<number | null>(null);
-  console.log(selectedBrandId);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCategoryID, setSelectedCategory] = useState<number | null>(null);
+
   useEffect(() => {
     dispatch(
-      getBrand({
+      getCategory({
         pageIndex: 1,
         pageSize: 100,
       })
     );
   }, []);
+
   useEffect(() => {
     dispatch(
       getProduct({
@@ -37,6 +42,19 @@ const BrandTable = () => {
       })
     );
   }, []);
+
+
+  const handleCancel = () =>{
+    setIsModalOpen(false);
+  }
+
+  const showModal = (categoryID: number) => {
+    setSelectedCategory(categoryID);
+    setIsModalOpen(true);
+    console.log(categoryID)
+  };
+
+  // thong bao
   const showNotification = () => {
     notification.success({
       className: "notification__item",
@@ -45,49 +63,42 @@ const BrandTable = () => {
       duration: 3,
     });
   };
-  const showBrandHasProductsError = () => {
+  const showCategoryHasProductsError = () => {
     notification.error({
       className: "notification__item notification__item--error",
-      message: "Thương hiệu đang tồn tại sản phẩm, không thể xóa được!",
+      message: "Danh mục đang tồn tại sản phẩm, không thể xóa được!",
       //   description: 'Sản phẩm đã được xóa thành công!',
       duration: 3,
     });
     setIsModalOpen(false);
   };
-  const showModal = (brandID: number) => {
-    setSelectedBrandId(brandID);
-    setIsModalOpen(true);
-  };
 
-  const handleOk = async () => {
-    if (selectedBrandId !== null) {
-      try {
-        const hasProducts = productList.some(product => product.brandId === selectedBrandId);
-        if (hasProducts) {
-          // Hiển thị thông báo lỗi
-          showBrandHasProductsError();
-        } else {
-          // Nếu không có sản phẩm liên quan, thực hiện xóa brand như bình thường.
-          await dispatch(deleteBrand(selectedBrandId));
-          setSelectedBrandId(null);
-          setIsModalOpen(false);
-          showNotification();
-        }
-      } catch (error) {
-        console.error("Error deleting brand:", error);
+// xu ly
+const handleOk = async () => {
+  if (selectedCategoryID !== null) {
+    try {
+      const hasProducts = productList.some(product => product.brandId === selectedCategoryID);
+      if (hasProducts) {
+        // Hiển thị thông báo lỗi
+        showCategoryHasProductsError();
+      } else {
+        // Nếu không có sản phẩm liên quan, thực hiện xóa brand như bình thường.
+        await dispatch(deleteCategory(selectedCategoryID));
+        setSelectedCategory(null);
+        setIsModalOpen(false);
+        showNotification();
       }
+    } catch (error) {
+      console.error("Error deleting brand:", error);
     }
-  };
+  }
+};
   
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  const dataForTable = brandList.map((brand, index) => ({
+  const dataForTable = categoryList.map((category, index) => ({
     key: index,
-    brandID: brand.id,
-    name: brand.name,
-    dateCreate: moment(brand.createdDT).format("DD-MM-YYYY")
+    categoryID: category.id,
+    name: category.name,
+    dateCreate: moment(category.createdDT).format("DD-MM-YYYY")
   }));
   const columns = [
     {
@@ -98,11 +109,11 @@ const BrandTable = () => {
     },
     {
       title: "ID",
-      dataIndex: "brandID",
+      dataIndex: "categoryID",
       width: 150,
     },
     {
-      title: "Tên thương hiệu",
+      title: "Tên danh mục",
       dataIndex: "name",
       width: 300,
     },
@@ -111,21 +122,6 @@ const BrandTable = () => {
       dataIndex: "dateCreate",
       width: 300,
     },
-    // {
-    //   title: "Trạng thái",
-    //   dataIndex: "status",
-    //   render: (text: any, record: any) => (
-    //     <span>
-    //       {text === "Published" ? (
-    //         <span className="status__publish">{text}</span>
-    //       ) : null}
-    //       {text === "Low Stock" ? (
-    //         <span className="status__low">{text}</span>
-    //       ) : null}
-    //     </span>
-    //   ),
-    //   width: 150,
-    // },
     {
       title: "Thao tác",
       dataIndex: "action",
@@ -140,11 +136,11 @@ const BrandTable = () => {
                   key: "0",
                   icon: <DeleteOutlined />,
                   className: "drop--delete",
-                  onClick: () => showModal(record.brandID),
+                  onClick: () => showModal(record.categoryID),
                 },
                 {
                   label: (
-                    <Link to={ROUTE_PATHS.EditBrand.replace(":id", record.brandID.toString())}>
+                    <Link to={ROUTE_PATHS.EditCategory.replace(":id", record.categoryID.toString())}>
                       Sửa
                     </Link>
                   ),
@@ -165,27 +161,26 @@ const BrandTable = () => {
       width: 100,
     },
   ];
-
   return (
     <>
       <TableComponent
         columns={columns}
         data={dataForTable}
-        placeholder="Tìm kiếm thương hiệu"
+        placeholder="Tìm kiếm danh mục"
       />
       <Modal
         centered
         open={isModalOpen}
-        onOk={handleOk}
+         onOk={handleOk}
         onCancel={handleCancel}
         className="modal__product"
         okType={"danger"}
       >
         <img src={deleteIcon} alt="" className="modal__product__icon" />
         <div className="modal__product__content">
-          <h2 className="modal__product__content--title">Xóa thương hiệu</h2>
+          <h2 className="modal__product__content--title">Xóa danh mục</h2>
           <p className="modal__product__content--desc">
-            Bạn có chắc chắn muốn xóa thương hiệu này không?
+            Bạn có chắc chắn muốn xóa danh mục này không?
           </p>
         </div>
       </Modal>
@@ -193,4 +188,4 @@ const BrandTable = () => {
   );
 };
 
-export default BrandTable;
+export default CategoryTable;
